@@ -114,8 +114,11 @@ const getScoreLine = ({homeTeam,awayTeam}) =>{
   return `${teamNames} ${scoreLine}`;
 }
 
-const chart1 = makeChart(warriorsGames, "Golden State");
-document.body.prepend(chart1);
 
-const chart2 = makeChart(warriorsGames, "Houston");
-document.body.prepend(chart2);
+const warriorSection = document.getElementById('gs');
+const rocketsSection = document.querySelector('#hr');
+const warriorChart = makeChart(warriorsGames, "Golden State");
+const rocketsChart = makeChart(warriorsGames, "Houston");
+
+warriorSection.appendChild(warriorChart);
+rocketsSection.appendChild(rocketsChart);
