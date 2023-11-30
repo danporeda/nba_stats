@@ -127,34 +127,33 @@ const makeChart = (games, targetTeam) => {
   const parentUl = document.createElement('ul');
   for (let game of games) {
     const gameLi = document.createElement('li');
-    gameLi.innerHTML = getScoreLine(game);
-    gameLi.classList.add(isWinner(game, targetTeam) ? 'win' : 'loss');
+    gameLi.innerHTML = getScoreline(game);
+    gameLi.classList.add(isWinner(game, targetTeam) ? 'win' : 'loss')
     parentUl.appendChild(gameLi);
   }
   return parentUl;
 }
 
-const isWinner = ({homeTeam, awayTeam}, targetTeam) => {
-  const target = targetTeam === homeTeam.team ? homeTeam : awayTeam;
+let scoreLine;
+const getScoreline = ({ homeTeam, awayTeam }) => {
+  const { team: hTeam, points: hPoints } = homeTeam;
+  const { team: aTeam, points: aPoints } = awayTeam;
+  if (aPoints > hPoints) {
+    scoreLine = `${aTeam} @ ${hTeam} <b>${aPoints}</b>-${hPoints}`;
+  } else {
+    scoreLine = `${aTeam} @ ${hTeam} ${aPoints}-<b>${hPoints}</b>`;
+  }
+  return scoreLine;
+}
+
+const isWinner = ({ homeTeam: hTeam, awayTeam: aTeam }, targetTeam) => {
+  const target = targetTeam === hTeam ? hTeam : aTeam;
   return target.isWinner;
 }
 
-const getScoreLine = ({homeTeam, awayTeam}) => {
-  const { team: hTeam, points: hPoints } = homeTeam;
-  const { team: aTeam, points: aPoints } = awayTeam;
-  const teamLine = `${aTeam} @ ${hTeam}`;
-  let pointLine;
-  if (aPoints > hPoints) {
-    pointLine = `<b>${aPoints}</b>-${hPoints}`;
-  } else {
-    pointLine = `${aPoints}-<b>${hPoints}</b>`
-  }
-  return `${teamLine} ${pointLine}`;
-}
-
-const warriorSection = document.getElementById('gs');
-const houstonSection = document.getElementById('hr');
-const warriorChart = makeChart(warriorsGames, 'Golden State')
-const houstonChart = makeChart(warriorsGames, 'Houston')
-warriorSection.appendChild(warriorChart);
-houstonSection.appendChild(houstonChart);
+const warriorChart = makeChart(warriorsGames, 'Golden State');
+const rocketsChart = makeChart(warriorsGames, 'Houston');
+const warriorsSection = document.getElementById('gs');
+const rocketssSection = document.getElementById('hr');
+warriorsSection.appendChild(warriorChart);
+rocketssSection.appendChild(rocketsChart);
