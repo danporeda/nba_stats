@@ -146,14 +146,14 @@ const getScoreline = ({ homeTeam, awayTeam }) => {
   return scoreLine;
 }
 
-const isWinner = ({ homeTeam: hTeam, awayTeam: aTeam }, targetTeam) => {
-  const target = targetTeam === hTeam ? hTeam : aTeam;
+const isWinner = ({ homeTeam, awayTeam }, targetTeam) => {
+  const target = targetTeam === homeTeam.team ? homeTeam : awayTeam;
   return target.isWinner;
 }
 
 const warriorChart = makeChart(warriorsGames, 'Golden State');
 const rocketsChart = makeChart(warriorsGames, 'Houston');
 const warriorsSection = document.getElementById('gs');
-const rocketssSection = document.getElementById('hr');
+const rocketsSection = document.getElementById('hr');
 warriorsSection.appendChild(warriorChart);
-rocketssSection.appendChild(rocketsChart);
+rocketsSection.appendChild(rocketsChart);
